@@ -62,6 +62,7 @@ def get_prediction(
     full_shape=None,
     postprocess: Optional[PostprocessPredictions] = None,
     verbose: int = 0,
+    batch: int = 1,
 ) -> PredictionResult:
     """
     Function for performing prediction for given image using given detection_model.
@@ -343,13 +344,13 @@ def get_prediction_batch(
     durations_in_seconds["prediction"] = time_end
     # process prediction
     time_start = time.time()
-    # works only with 1 batch
     detection_model.convert_original_predictions(
         shift_amount=shift_amount,
         full_shape=full_shape,
     )
 
     result = []  # List of PredictionResult which will contain the result of each slice of the batch
+
     for k in range(
         len(detection_model.object_prediction_list_per_image)
     ):  # Passing through every prediction of the batch
@@ -378,7 +379,7 @@ def get_prediction_batch(
 
 
 def get_sliced_prediction_batch(
-    images: List[str],
+    images: List[str],  # Modify in order to take into account str type
     detection_model=None,
     output_file_name=None,  # ADDED OUTPUT FILE NAME TO (OPTIONALLY) SAVE SLICES
     interim_dir="slices/",  # ADDED INTERIM DIRECTORY TO (OPTIONALLY) SAVE SLICES
@@ -452,13 +453,14 @@ def get_sliced_prediction_batch(
     durations_in_seconds = dict()
 
     num_batch = batch  # Number of slices per batch (constant)
+    if isinstance(images, str) or isinstance(images, str):
+        images = [images]
 
     # create slices from full image
     time_start = time.time()
 
     slice_image_list = []  # List of slices from sliced images
     image_id_list = []  # List of images ids
-
     for image_id, image in enumerate(images):
         slice_image_result = slice_image(
             image=image,
