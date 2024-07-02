@@ -62,7 +62,6 @@ def get_prediction(
     full_shape=None,
     postprocess: Optional[PostprocessPredictions] = None,
     verbose: int = 0,
-    batch: int = 1,
 ) -> PredictionResult:
     """
     Function for performing prediction for given image using given detection_model.
@@ -338,9 +337,15 @@ def get_prediction_batch(
     durations_in_seconds = dict()
 
     # get prediction
-    time_start = time.time()
-    detection_model.perform_inference(image)
-    time_end = time.time() - time_start
+    if isinstance(image, str):
+        time_start = time.time()
+        image_as_pil = read_image_as_pil(image)
+        detection_model.perform_inference(np.ascontiguousarray(image_as_pil))
+        time_end = time.time() - time_start
+    else:
+        time_start = time.time()
+        detection_model.perform_inference(image)
+        time_end = time.time() - time_start
     durations_in_seconds["prediction"] = time_end
     # process prediction
     time_start = time.time()
@@ -379,7 +384,7 @@ def get_prediction_batch(
 
 
 def get_sliced_prediction_batch(
-    images: List[str],  # Modify in order to take into account str type
+    images: List[str],
     detection_model=None,
     output_file_name=None,  # ADDED OUTPUT FILE NAME TO (OPTIONALLY) SAVE SLICES
     interim_dir="slices/",  # ADDED INTERIM DIRECTORY TO (OPTIONALLY) SAVE SLICES
@@ -401,7 +406,7 @@ def get_sliced_prediction_batch(
     Function for slice images + get predicion on batch of slices + combine predictions in full images.
 
     Args :
-        images: list of str
+        images: list of str or str or np.ndarray
             Location of images or numpy image matrix to slice
         detection_model: model.DetectionModel
         slice_height: int
@@ -453,7 +458,7 @@ def get_sliced_prediction_batch(
     durations_in_seconds = dict()
 
     num_batch = batch  # Number of slices per batch (constant)
-    if isinstance(images, str) or isinstance(images, str):
+    if isinstance(images, str) or isinstance(images, np.ndarray):
         images = [images]
 
     # create slices from full image
