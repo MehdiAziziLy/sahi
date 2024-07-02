@@ -191,7 +191,7 @@ def read_image_as_pil(image: Union[Image.Image, str, np.ndarray, list], exif_fix
 
     Args:
         image (Union[Image.Image, str, np.ndarray, list]): The image to be loaded. It can be an image path or URL (str),
-            a numpy image (np.ndarray), or a PIL.Image object.
+            a numpy image (np.ndarray), a PIL.Image object, or a list of (str).
         exif_fix (bool, optional): Whether to apply an EXIF fix to the image. Defaults to False.
 
     Returns:
