@@ -69,8 +69,12 @@ class Yolov8DetectionModel(DetectionModel):
 
         if self.image_size is not None:
             kwargs = {"imgsz": self.image_size, **kwargs}
-
-        prediction_result = self.model(image, **kwargs)  # YOLOv8 expects numpy arrays to have BGR
+        if isinstance(image, list):
+            prediction_result = self.model(
+                [img[:, :, ::-1] for img in image], **kwargs
+            )  # YOLOv8 expects numpy arrays to have BGR
+        else:
+            prediction_result = self.model(image[:, :, ::-1], **kwargs)  # YOLOv8 expects numpy arrays to have BGR
 
         if self.has_mask:
             if not prediction_result[0].masks:
@@ -92,7 +96,7 @@ class Yolov8DetectionModel(DetectionModel):
             prediction_result = [result.boxes.data for result in prediction_result]
 
         self._original_predictions = prediction_result
-        if isinstance(image, list): # For batched inference
+        if isinstance(image, list):  # For batched inference
             self._original_shape = image[0].shape
         else:
             self._original_shape = image.shape

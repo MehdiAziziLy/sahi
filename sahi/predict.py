@@ -417,6 +417,8 @@ def get_sliced_prediction(
         result.append(
             PredictionResult(image=im, object_prediction_list=pred, durations_in_seconds=durations_in_seconds)
         )
+    if len(result) == 1: # In case images is only one image (str or np.ndarray)
+        result = result[0]
 
     return result
 
