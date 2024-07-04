@@ -278,9 +278,15 @@ def get_sliced_prediction(
         print(f"\nTotal number of slice(s) : {num_slices}")
 
     if num_batch > len(slice_image_result.images):
-        raise ValueError(f"The number of slices per batch is exceeding the total number of slices !")
+        print(
+            f"The number of slices per batch ({num_batch}) is exceeding the total number of slices ({len(slice_image_result.images)})!"
+        )
+        print(f"Batch size was changed to total number of slices")
+        num_batch = len(slice_image_result.images)
     elif num_batch == 0:
         raise ValueError(f"Batch size cannot be 0 !")
+    elif not (isinstance(num_batch, int)):
+        raise ValueError(f"Batch size must be an integer !")
 
     # init match postprocess instance
     if postprocess_type not in POSTPROCESS_NAME_TO_CLASS.keys():
@@ -302,7 +308,7 @@ def get_sliced_prediction(
     )  # Number of batch (should use ceil() instead of int casting since number of slice per batch could be a non divider of total number of slices)
 
     if verbose == 1 or verbose == 2:
-        tqdm.write(f"\nNumber of slices per batch : {num_batch}")
+        tqdm.write(f"\nNumber of slices per batch (batch size): {num_batch}")
         tqdm.write(f"\nPerforming prediction on {num_group} batch(es).")
 
     if verbose == 1 or verbose == 2:
