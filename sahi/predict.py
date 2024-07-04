@@ -370,7 +370,7 @@ def get_sliced_prediction(
                                     index_to_prediction_map[i]
                                 )  # We add prediction to the corresponding image
 
-    if verbose == 1 or verbose == 2:
+    if verbose == 2:
         tqdm.write("\nPerforming standard prediction ...")
     # perform standard prediction
     for idx, ima in enumerate(images):
@@ -409,7 +409,7 @@ def get_sliced_prediction(
     for npred in prediction_per_image:
         final_pred_number += len(npred)
 
-    if verbose == 1 or verbose == 2:
+    if verbose == 2:
         print(f"Number of final predictions : {final_pred_number}")
 
     result = []
@@ -417,7 +417,7 @@ def get_sliced_prediction(
         result.append(
             PredictionResult(image=im, object_prediction_list=pred, durations_in_seconds=durations_in_seconds)
         )
-    if len(result) == 1: # In case images is only one image (str or np.ndarray)
+    if len(result) == 1:  # In case images is only one image (str or np.ndarray)
         result = result[0]
 
     return result

@@ -13,7 +13,7 @@ CONFIDENCE_THRESHOLD = 0.3
 IMAGE_SIZE = 640
 
 
-class TestPredict(unittest.TestCase):
+class TestPredictBatch(unittest.TestCase):
     def test_prediction_score(self):
         from sahi.prediction import PredictionScore
 
