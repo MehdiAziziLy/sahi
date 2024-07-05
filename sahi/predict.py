@@ -277,11 +277,11 @@ def get_sliced_prediction(
     if verbose == 1 or verbose == 2:
         print(f"\nTotal number of slice(s) : {num_slices}")
 
-    if num_batch > len(slice_image_result.images):
+    if num_batch > len(slice_image_result.images) and isinstance(num_batch, int):
         print(
-            f"The number of slices per batch ({num_batch}) is exceeding the total number of slices ({len(slice_image_result.images)})!"
+            f"The number of slices per batch ({num_batch}) is exceeding the total number of slices ({len(slice_image_result.images)}) !"
         )
-        print(f"Batch size was changed to total number of slices")
+        print(f"Batch size was changed to total number of slices ({len(slice_image_result.images)})")
         num_batch = len(slice_image_result.images)
     elif num_batch == 0:
         raise ValueError(f"Batch size cannot be 0 !")
