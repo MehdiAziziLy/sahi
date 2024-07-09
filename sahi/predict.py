@@ -219,7 +219,7 @@ def get_sliced_prediction(
             if slice parameters (slice_height, slice_width) are not given,
             it enables automatically calculate these params from image resolution and orientation.
         batch: int
-            Number of slices per batch (batch size). Defaults to ``1``
+            Number of slices per batch (batch size).  Defaults to ``1``.
 
     Returns:
         A Dict with fields:

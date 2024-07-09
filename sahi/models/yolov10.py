@@ -16,7 +16,7 @@ from sahi.utils.import_utils import check_requirements
 from sahi.models.yolov8plus import Yolov8PlusDetectionModel
 
 
-class Yolov8DetectionModel(Yolov8PlusDetectionModel):
+class Yolov10DetectionModel(Yolov8PlusDetectionModel):
     def check_dependencies(self) -> None:
         return super().check_dependencies()
 
@@ -29,10 +29,10 @@ class Yolov8DetectionModel(Yolov8PlusDetectionModel):
 
     def set_model(self, model: Any):
         """
-        Sets the underlying YOLOv9 model.
+        Sets the underlying YOLOv10 model.
         Args:
             model: Any
-                A YOLOv9 model
+                A YOLOv10 model
         """
 
         return super().set_model(model)

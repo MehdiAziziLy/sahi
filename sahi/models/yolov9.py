@@ -16,7 +16,7 @@ from sahi.utils.import_utils import check_requirements
 from sahi.models.yolov8plus import Yolov8PlusDetectionModel
 
 
-class Yolov8DetectionModel(Yolov8PlusDetectionModel):
+class Yolov9DetectionModel(Yolov8PlusDetectionModel):
     def check_dependencies(self) -> None:
         return super().check_dependencies()
 
