@@ -24,10 +24,10 @@ class Yolov8DetectionModel(Yolov8PlusDetectionModel):
 
     def set_model(self, model: Any):
         """
-        Sets the underlying YOLOv9 model.
+        Sets the underlying YOLOv8 model.
         Args:
             model: Any
-                A YOLOv9 model
+                A YOLOv8 model
         """
 
         return super().set_model(model)

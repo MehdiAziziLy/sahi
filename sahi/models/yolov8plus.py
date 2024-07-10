@@ -33,14 +33,14 @@ class Yolov8PlusDetectionModel(DetectionModel):
             model.to(self.device)
             self.set_model(model)
         except Exception as e:
-            raise TypeError("model_path is not a valid yolov8 model path: ", e)
+            raise TypeError("model_path is not a valid yolov8plus model path: ", e)
 
     def set_model(self, model: Any):
         """
-        Sets the underlying YOLOv8 model.
+        Sets the underlying YOLOv8plus model.
         Args:
             model: Any
-                A YOLOv8 model
+                A YOLOv8plus model
         """
 
         self.model = model
